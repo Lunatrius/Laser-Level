@@ -1,0 +1,12 @@
+# Blocks
+tile.laserlevel.name=Laser Level
+
+# GUI
+laserlevel.gui.x=x
+laserlevel.gui.y=y
+laserlevel.gui.z=z
+laserlevel.gui.decrease=-
+laserlevel.gui.increase=+
+laserlevel.gui.done=Done
+laserlevel.gui.offset=Offset
+laserlevel.gui.spacer=Spacer
