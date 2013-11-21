@@ -44,7 +44,6 @@ public class LaserLevel {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		GameRegistry.registerBlock(blockLaserLevel, ItemBlock.class, "laserLevel");
-		// LanguageRegistry.instance().addStringLocalization(blockLaserLevel.getBlockName() + ".name", "en_US", "Laser Level");
 		proxy.registerRecipes();
 		proxy.registerTileEntities();
 		proxy.registerTileEntitySpecialRenderers();
