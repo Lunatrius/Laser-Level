@@ -1,0 +1,30 @@
+# gui - list
+laserlevel.gui.titleList=Laser Level - Liste
+laserlevel.gui.add=Ajouter
+laserlevel.gui.delete=Effacer
+laserlevel.gui.edit=Editer
+laserlevel.gui.done=Fini
+
+# gui - edit
+laserlevel.gui.titleEdit=Laser Level - Editer
+laserlevel.gui.x=X:
+laserlevel.gui.y=Y:
+laserlevel.gui.z=Z:
+laserlevel.gui.sliderFormat=%s: %d
+laserlevel.gui.spacing=Espacement
+laserlevel.gui.red=Rouge
+laserlevel.gui.green=Vert
+laserlevel.gui.blue=Bleu
+laserlevel.gui.down=Bas
+laserlevel.gui.up=Haut
+laserlevel.gui.north=North
+laserlevel.gui.south=South
+laserlevel.gui.west=Ouest
+laserlevel.gui.east=Est
+laserlevel.gui.on=Marche
+laserlevel.gui.off=Arrêt
+laserlevel.gui.move=Ensemble du joueur
+
+# keys
+laserlevel.key.category=LaserLevel
+laserlevel.key.open=Ouvrir la liste de marqueur
