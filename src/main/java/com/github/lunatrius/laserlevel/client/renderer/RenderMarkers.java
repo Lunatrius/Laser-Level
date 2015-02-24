@@ -61,13 +61,6 @@ public class RenderMarkers {
         this.markerContainer.setTranslation(-this.playerPosition.x, -this.playerPosition.y, -this.playerPosition.z);
 
         if (this.dirty) {
-            /*
-            this.profiler.endStartSection("sort");
-            List<Marker> list = new ArrayList<Marker>();
-            list.addAll(ClientProxy.MARKERS);
-            Reference.logger.trace("---");
-            Collections.sort(list, new MarkerComparator());
-             */
             this.profiler.endStartSection("compile");
             this.markerContainer.compile(ClientProxy.MARKERS);
 
