@@ -41,12 +41,10 @@ public class RenderMarkers {
 
             GlStateManager.disableTexture2D();
             GlStateManager.enableBlend();
-            GlStateManager.enableAlpha();
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
             render();
 
-            GlStateManager.disableAlpha();
             GlStateManager.disableBlend();
             GlStateManager.enableTexture2D();
 
