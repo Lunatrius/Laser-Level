@@ -40,11 +40,6 @@ public class MarkerContainerList extends MarkerContainer {
 
         GlStateManager.popMatrix();
         GL11.glEndList();
-
-        int error;
-        while ((error = GL11.glGetError()) != GL11.GL_NO_ERROR) {
-            System.out.println(error);
-        }
     }
 
     @Override
