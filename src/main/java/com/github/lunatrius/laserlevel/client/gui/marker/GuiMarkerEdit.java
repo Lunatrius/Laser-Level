@@ -33,7 +33,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
     private GuiSlider sliderG = null;
     private GuiSlider sliderB = null;
 
-    private final GuiCheckBox[] checkBoxes = new GuiCheckBox[EnumFacing.values().length];
+    private final GuiCheckBox[] checkBoxes = new GuiCheckBox[EnumFacing.VALUES.length];
 
     private GuiButton btnToggle = null;
     private GuiButton btnMove = null;
@@ -190,7 +190,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
             } else if (button.id == this.btnDone.id) {
                 this.mc.displayGuiScreen(this.parentScreen);
             } else {
-                for (final EnumFacing side : EnumFacing.values()) {
+                for (final EnumFacing side : EnumFacing.VALUES) {
                     final GuiCheckBox checkBox = this.checkBoxes[side.ordinal()];
                     if (button.id == checkBox.id) {
                         this.marker.setEnabled(side, checkBox.isChecked());

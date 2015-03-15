@@ -87,7 +87,7 @@ public class GuiMarkersSlot extends GuiSlot {
         builder.append(I18n.format(marker.enabled ? Names.Gui.GuiMarkerEdit.ON : Names.Gui.GuiMarkerEdit.OFF));
 
         final List<String> sides = new ArrayList<String>();
-        for (final EnumFacing side : EnumFacing.values()) {
+        for (final EnumFacing side : EnumFacing.VALUES) {
             if (marker.isEnabled(side)) {
                 sides.add(I18n.format(Names.Gui.GuiMarkerEdit.SIDE_BASE + side.getName()));
             }

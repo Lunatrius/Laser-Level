@@ -28,7 +28,7 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
         object.addProperty("blue", src.getBlue());
 
         final JsonObject sides = new JsonObject();
-        for (final EnumFacing side : EnumFacing.values()) {
+        for (final EnumFacing side : EnumFacing.VALUES) {
             sides.addProperty(side.getName(), src.isEnabled(side));
         }
 
@@ -58,7 +58,7 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
                 marker.setGreen(green);
                 marker.setBlue(blue);
 
-                for (final EnumFacing side : EnumFacing.values()) {
+                for (final EnumFacing side : EnumFacing.VALUES) {
                     if (sides.has(side.getName())) {
                         marker.setEnabled(side, sides.getAsJsonPrimitive(side.getName()).getAsBoolean());
                     }

@@ -11,7 +11,7 @@ public class Marker {
     public int spacing;
     public int rgb;
 
-    private boolean sides[] = new boolean[EnumFacing.values().length];
+    private boolean sides[] = new boolean[EnumFacing.VALUES.length];
 
     public Marker(final BlockPos pos, final int spacing, final int rgb) {
         this.pos = new MBlockPos(pos);
@@ -19,7 +19,7 @@ public class Marker {
         this.spacing = spacing;
         this.rgb = rgb;
 
-        for (final EnumFacing side : EnumFacing.values()) {
+        for (final EnumFacing side : EnumFacing.VALUES) {
             this.sides[side.ordinal()] = true;
         }
     }

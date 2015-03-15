@@ -34,7 +34,7 @@ public abstract class MarkerContainer {
 
         tessellator.drawCuboid(marker.pos, sides, marker.rgb, Constants.Rendering.ALPHA_QUADS);
 
-        final EnumFacing[] values = EnumFacing.values();
+        final EnumFacing[] values = EnumFacing.VALUES;
 
         for (final EnumFacing side : values) {
             if (!marker.isEnabled(side)) {
