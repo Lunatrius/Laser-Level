@@ -12,7 +12,6 @@ import java.util.List;
 
 public abstract class MarkerContainer {
     protected boolean initialized = false;
-    private final MBlockPos tmp = new MBlockPos();
     private double x;
     private double y;
     private double z;
@@ -42,8 +41,8 @@ public abstract class MarkerContainer {
             }
 
             for (int next = marker.spacing; next <= Constants.Rendering.MAX_DISTANCE; next += marker.spacing) {
-                this.tmp.set(marker.pos).add(side.getFrontOffsetX() * next, side.getFrontOffsetY() * next, side.getFrontOffsetZ() * next);
-                tessellator.drawCuboid(this.tmp, sides, marker.rgb, Constants.Rendering.ALPHA_QUADS);
+                final MBlockPos pos = marker.pos.offset(side, next);
+                tessellator.drawCuboid(pos, sides, marker.rgb, Constants.Rendering.ALPHA_QUADS);
             }
         }
     }
