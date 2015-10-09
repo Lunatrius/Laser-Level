@@ -7,6 +7,7 @@ laserlevel.gui.done=Fini
 
 # gui - edit
 laserlevel.gui.titleEdit=Laser Level - Editer
+laserlevel.gui.markerLength=Longueur de Marker:
 laserlevel.gui.x=X:
 laserlevel.gui.y=Y:
 laserlevel.gui.z=Z:

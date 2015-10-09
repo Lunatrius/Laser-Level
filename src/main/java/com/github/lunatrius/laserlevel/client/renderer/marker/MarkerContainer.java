@@ -40,7 +40,7 @@ public abstract class MarkerContainer {
                 continue;
             }
 
-            for (int next = marker.spacing; next <= Constants.Rendering.MAX_DISTANCE; next += marker.spacing) {
+            for (int next = marker.spacing; next <= marker.markerLength; next += marker.spacing) {
                 final MBlockPos pos = marker.pos.offset(side, next);
                 tessellator.drawCuboid(pos, sides, marker.rgb, Constants.Rendering.ALPHA_QUADS);
             }
@@ -57,24 +57,24 @@ public abstract class MarkerContainer {
 
         int hi, lo;
 
-        hi = marker.isEnabled(EnumFacing.EAST) ? Constants.Rendering.MAX_DISTANCE : 0;
-        lo = marker.isEnabled(EnumFacing.WEST) ? Constants.Rendering.MAX_DISTANCE : 0;
+        hi = marker.isEnabled(EnumFacing.EAST) ? marker.markerLength : 0;
+        lo = marker.isEnabled(EnumFacing.WEST) ? marker.markerLength : 0;
 
         if (hi != 0 || lo != 0) {
             worldRenderer.addVertex(marker.pos.x + 0.5 + hi, marker.pos.y + 0.5, marker.pos.z + 0.5);
             worldRenderer.addVertex(marker.pos.x + 0.5 - lo, marker.pos.y + 0.5, marker.pos.z + 0.5);
         }
 
-        hi = marker.isEnabled(EnumFacing.UP) ? Constants.Rendering.MAX_DISTANCE : 0;
-        lo = marker.isEnabled(EnumFacing.DOWN) ? Constants.Rendering.MAX_DISTANCE : 0;
+        hi = marker.isEnabled(EnumFacing.UP) ? marker.markerLength : 0;
+        lo = marker.isEnabled(EnumFacing.DOWN) ? marker.markerLength : 0;
 
         if (hi != 0 || lo != 0) {
             worldRenderer.addVertex(marker.pos.x + 0.5, marker.pos.y + 0.5 + hi, marker.pos.z + 0.5);
             worldRenderer.addVertex(marker.pos.x + 0.5, marker.pos.y + 0.5 - lo, marker.pos.z + 0.5);
         }
 
-        hi = marker.isEnabled(EnumFacing.SOUTH) ? Constants.Rendering.MAX_DISTANCE : 0;
-        lo = marker.isEnabled(EnumFacing.NORTH) ? Constants.Rendering.MAX_DISTANCE : 0;
+        hi = marker.isEnabled(EnumFacing.SOUTH) ? marker.markerLength : 0;
+        lo = marker.isEnabled(EnumFacing.NORTH) ? marker.markerLength : 0;
 
         if (hi != 0 || lo != 0) {
             worldRenderer.addVertex(marker.pos.x + 0.5, marker.pos.y + 0.5, marker.pos.z + 0.5 + hi);

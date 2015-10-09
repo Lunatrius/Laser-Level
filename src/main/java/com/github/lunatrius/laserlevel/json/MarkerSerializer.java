@@ -18,6 +18,7 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
     @Override
     public JsonElement serialize(final Marker src, final Type typeOfSrc, final JsonSerializationContext context) {
         final JsonObject object = new JsonObject();
+        object.addProperty("markerlength", src.markerLength);
         object.addProperty("x", src.pos.x);
         object.addProperty("y", src.pos.y);
         object.addProperty("z", src.pos.z);
@@ -42,6 +43,7 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
         if (json.isJsonObject()) {
             try {
                 final JsonObject object = json.getAsJsonObject();
+                final int markerLength = object.has("markerlength") ? object.getAsJsonPrimitive("markerlength").getAsInt() : 64;
                 final int x = object.getAsJsonPrimitive("x").getAsInt();
                 final int y = object.getAsJsonPrimitive("y").getAsInt();
                 final int z = object.getAsJsonPrimitive("z").getAsInt();
@@ -53,6 +55,7 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
                 final JsonObject sides = object.getAsJsonObject("sides");
 
                 final Marker marker = new Marker(new BlockPos(x, y, z), spacing, 0x000000);
+                marker.markerLength = markerLength;
                 marker.enabled = enabled;
                 marker.setRed(red);
                 marker.setGreen(green);
