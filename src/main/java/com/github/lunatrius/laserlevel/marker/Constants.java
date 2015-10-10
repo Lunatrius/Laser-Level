@@ -3,7 +3,8 @@ package com.github.lunatrius.laserlevel.marker;
 public class Constants {
     public static final class Rendering {
         public static final double BLOCK_DELTA = -0.25;
-        public static final int MAX_DISTANCE = 64;
+        public static final int DEFAULT_LENGTH = 64;
+        public static final int MAX_LENGTH = 1024;
         public static final int ALPHA_QUADS = 0x7F;
         public static final int ALPHA_LINES = 0xBF;
     }

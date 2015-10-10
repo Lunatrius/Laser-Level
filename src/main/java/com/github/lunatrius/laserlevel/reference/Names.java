@@ -20,6 +20,7 @@ public final class Names {
             public static final String GREEN = "laserlevel.gui.green";
             public static final String BLUE = "laserlevel.gui.blue";
             public static final String SIDE_BASE = "laserlevel.gui.";
+            public static final String MARKER_LENGTH = "laserlevel.gui.markerLength";
             public static final String X = "laserlevel.gui.x";
             public static final String Y = "laserlevel.gui.y";
             public static final String Z = "laserlevel.gui.z";

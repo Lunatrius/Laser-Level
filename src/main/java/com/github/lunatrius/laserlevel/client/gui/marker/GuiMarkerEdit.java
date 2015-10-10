@@ -24,6 +24,7 @@ import java.io.IOException;
 public class GuiMarkerEdit extends GuiScreenBase {
     private final Marker marker;
 
+    private GuiNumericField nfMarkerLength = null;
     private GuiNumericField nfX = null;
     private GuiNumericField nfY = null;
     private GuiNumericField nfZ = null;
@@ -40,6 +41,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
     private GuiButton btnDone = null;
 
     private final String strTitle = I18n.format(Names.Gui.GuiMarkerEdit.TITLE);
+    private final String strMarkerLength = I18n.format(Names.Gui.GuiMarkerEdit.MARKER_LENGTH);
     private final String strX = I18n.format(Names.Gui.GuiMarkerEdit.X);
     private final String strY = I18n.format(Names.Gui.GuiMarkerEdit.Y);
     private final String strZ = I18n.format(Names.Gui.GuiMarkerEdit.Z);
@@ -101,6 +103,9 @@ public class GuiMarkerEdit extends GuiScreenBase {
         final int nfHeight = 20;
         int id = -1;
 
+        this.nfMarkerLength = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX, centerY - nfHeight / 2 - (nfHeight + 5) * 4);
+        this.buttonList.add(this.nfMarkerLength);
+
         this.nfX = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX - nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 3);
         this.buttonList.add(this.nfX);
 
@@ -113,7 +118,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
         final int sliderWidth = 250;
         final int sliderHeight = 20;
 
-        this.sliderSpacing = new GuiSlider(this.guiResponder, ++id, centerX - sliderWidth / 2, centerY - sliderHeight / 2 + (sliderHeight + 5) * 0, I18n.format(Names.Gui.GuiMarkerEdit.SPACING), 1.0f, 64.0f, this.marker.spacing, this.formatValue);
+        this.sliderSpacing = new GuiSlider(this.guiResponder, ++id, centerX - sliderWidth / 2, centerY - sliderHeight / 2 + (sliderHeight + 5) * 0, I18n.format(Names.Gui.GuiMarkerEdit.SPACING), 1.0f, 128.0f, this.marker.spacing, this.formatValue);
         this.sliderSpacing.width = sliderWidth;
         this.buttonList.add(this.sliderSpacing);
 
@@ -151,6 +156,8 @@ public class GuiMarkerEdit extends GuiScreenBase {
         this.btnDone = new GuiButton(++id, centerX + 4 + 50, this.height - 25, 100, 20, I18n.format(Names.Gui.GuiMarkers.DONE));
         this.buttonList.add(this.btnDone);
 
+        this.nfMarkerLength.setMinimum(0);
+        this.nfMarkerLength.setMaximum(Constants.Rendering.MAX_LENGTH);
         this.nfX.setMinimum(Constants.World.MINIMUM_COORD);
         this.nfX.setMaximum(Constants.World.MAXIMUM_COORD);
         this.nfY.setMinimum(Constants.World.MINIMUM_COORD);
@@ -158,6 +165,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
         this.nfZ.setMinimum(Constants.World.MINIMUM_COORD);
         this.nfZ.setMaximum(Constants.World.MAXIMUM_COORD);
 
+        this.nfMarkerLength.setValue(this.marker.markerLength);
         this.nfX.setValue(this.marker.pos.x);
         this.nfY.setValue(this.marker.pos.y);
         this.nfZ.setValue(this.marker.pos.z);
@@ -168,7 +176,10 @@ public class GuiMarkerEdit extends GuiScreenBase {
     @Override
     protected void actionPerformed(final GuiButton button) throws IOException {
         if (button.enabled) {
-            if (button.id == this.nfX.id) {
+            if (button.id == this.nfMarkerLength.id) {
+                this.marker.markerLength = this.nfMarkerLength.getValue();
+                RenderMarkers.INSTANCE.markDirty();
+            } else if (button.id == this.nfX.id) {
                 this.marker.pos.x = this.nfX.getValue();
                 RenderMarkers.INSTANCE.markDirty();
             } else if (button.id == this.nfY.id) {
@@ -205,6 +216,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
     private void updateButtons() {
         this.btnToggle.displayString = I18n.format(this.marker.enabled ? Names.Gui.GuiMarkerEdit.ON : Names.Gui.GuiMarkerEdit.OFF);
 
+        this.nfMarkerLength.setEnabled(this.marker.enabled);
         this.nfX.setEnabled(this.marker.enabled);
         this.nfY.setEnabled(this.marker.enabled);
         this.nfZ.setEnabled(this.marker.enabled);
@@ -230,6 +242,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
         final int nfHeight = 20;
 
         drawCenteredString(this.fontRendererObj, this.strTitle, centerX, 4, 0x00FFFFFF);
+        drawString(this.fontRendererObj, this.strMarkerLength, centerX - 120, centerY - (nfHeight + 5) * 3 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
         drawString(this.fontRendererObj, this.strX, centerX - 120, centerY - (nfHeight + 5) * 2 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
         drawString(this.fontRendererObj, this.strY, centerX - 120, centerY - (nfHeight + 5) * 1 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
         drawString(this.fontRendererObj, this.strZ, centerX - 120, centerY - (nfHeight + 5) * 0 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
