@@ -25,6 +25,7 @@ public class GuiMarkersSlot extends GuiSlot {
     private final String strX = I18n.format(Names.Gui.GuiMarkerEdit.X);
     private final String strY = I18n.format(Names.Gui.GuiMarkerEdit.Y);
     private final String strZ = I18n.format(Names.Gui.GuiMarkerEdit.Z);
+    private final String strDim = I18n.format(Names.Gui.GuiMarkerEdit.DIM);
 
     public GuiMarkersSlot(final GuiMarkers guiMarkers) {
         super(Minecraft.getMinecraft(), guiMarkers.width, guiMarkers.height, 16, guiMarkers.height - 50, 26);
@@ -77,11 +78,12 @@ public class GuiMarkersSlot extends GuiSlot {
         final Marker marker = ClientProxy.MARKERS.get(index);
         final MBlockPos pos = marker.pos;
         final int color = marker.enabled ? 0x00FFFFFF : 0x00FF7F7F;
-        final int spacing = 80;
+        final int spacing = 65;
 
         this.guiMarkers.drawString(this.mc.fontRendererObj, this.strX + " " + pos.x, x + 2 + spacing * 0, y + 2, color);
         this.guiMarkers.drawString(this.mc.fontRendererObj, this.strY + " " + pos.y, x + 2 + spacing * 1, y + 2, color);
         this.guiMarkers.drawString(this.mc.fontRendererObj, this.strZ + " " + pos.z, x + 2 + spacing * 2, y + 2, color);
+        this.guiMarkers.drawString(this.mc.fontRendererObj, this.strDim + " " + marker.dimension, x + 2 + spacing * 3, y + 2, color);
 
         final StringBuilder builder = new StringBuilder();
         builder.append(I18n.format(marker.enabled ? Names.Gui.GuiMarkerEdit.ON : Names.Gui.GuiMarkerEdit.OFF));

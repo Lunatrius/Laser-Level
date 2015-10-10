@@ -60,7 +60,7 @@ public class GuiMarkers extends GuiScreenBase {
     protected void actionPerformed(final GuiButton guiButton) {
         if (guiButton.enabled) {
             if (guiButton.id == this.btnAdd.id) {
-                final Marker marker = new Marker(new BlockPos(this.mc.thePlayer), 1, 0x0000BF);
+                final Marker marker = new Marker(new BlockPos(this.mc.thePlayer), this.mc.thePlayer.dimension, 1, 0x0000BF);
                 LaserLevel.proxy.addMarker(marker);
                 this.guiMarkersSlot.selectedIndex = -1;
                 this.btnDelete.enabled = false;

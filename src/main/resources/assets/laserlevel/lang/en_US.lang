@@ -11,6 +11,7 @@ laserlevel.gui.markerLength=Marker Length:
 laserlevel.gui.x=X:
 laserlevel.gui.y=Y:
 laserlevel.gui.z=Z:
+laserlevel.gui.dim=Dim:
 laserlevel.gui.sliderFormat=%s: %d
 laserlevel.gui.spacing=Spacing
 laserlevel.gui.red=Red

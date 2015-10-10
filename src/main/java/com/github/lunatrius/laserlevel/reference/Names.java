@@ -24,6 +24,7 @@ public final class Names {
             public static final String X = "laserlevel.gui.x";
             public static final String Y = "laserlevel.gui.y";
             public static final String Z = "laserlevel.gui.z";
+            public static final String DIM = "laserlevel.gui.dim";
             public static final String ON = "laserlevel.gui.on";
             public static final String OFF = "laserlevel.gui.off";
         }

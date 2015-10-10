@@ -4,15 +4,20 @@ import com.github.lunatrius.core.util.vector.Vector3d;
 import com.github.lunatrius.laserlevel.client.renderer.marker.MarkerContainer;
 import com.github.lunatrius.laserlevel.client.renderer.marker.MarkerContainerList;
 import com.github.lunatrius.laserlevel.client.renderer.marker.MarkerContainerVbo;
+import com.github.lunatrius.laserlevel.marker.Marker;
 import com.github.lunatrius.laserlevel.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.profiler.Profiler;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RenderMarkers {
     public static final RenderMarkers INSTANCE = new RenderMarkers();
@@ -20,6 +25,7 @@ public class RenderMarkers {
     private final Minecraft minecraft = Minecraft.getMinecraft();
     private final Profiler profiler = this.minecraft.mcProfiler;
     private final Vector3d playerPosition = new Vector3d();
+    private final Vector3d prevPlayerPosition = new Vector3d();
     private MarkerContainer markerContainer;
     private boolean dirty;
 
@@ -43,7 +49,7 @@ public class RenderMarkers {
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
-            render();
+            render(player);
 
             GlStateManager.disableBlend();
             GlStateManager.enableTexture2D();
@@ -54,13 +60,22 @@ public class RenderMarkers {
         }
     }
 
-    private void render() {
+    private void render(final EntityPlayer player) {
         this.profiler.startSection("setup");
         this.markerContainer.setTranslation(-this.playerPosition.x, -this.playerPosition.y, -this.playerPosition.z);
 
+        if (this.playerPosition.lengthSquaredTo(this.prevPlayerPosition) > 16 * 16) {
+            this.prevPlayerPosition.set(this.playerPosition);
+
+            markDirty();
+        }
+
         if (this.dirty) {
+            this.profiler.endStartSection("filter");
+            final List<Marker> markers = filterMarkers(ClientProxy.MARKERS, player);
+
             this.profiler.endStartSection("compile");
-            this.markerContainer.compile(ClientProxy.MARKERS);
+            this.markerContainer.compile(markers);
 
             this.dirty = false;
         }
@@ -69,6 +84,24 @@ public class RenderMarkers {
         this.markerContainer.draw();
 
         this.profiler.endSection();
+    }
+
+    private List<Marker> filterMarkers(final List<Marker> markers, final EntityPlayer player) {
+        final List<Marker> filtered = new ArrayList<Marker>();
+        for (final Marker marker : markers) {
+            if (marker.dimension != player.dimension) {
+                continue;
+            }
+
+            final int length = marker.markerLength;
+            if (marker.pos.distanceSqToCenter(this.playerPosition.x, this.playerPosition.y, this.playerPosition.z) > length * length) {
+                continue;
+            }
+
+            filtered.add(marker);
+        }
+
+        return filtered;
     }
 
     private void init() {

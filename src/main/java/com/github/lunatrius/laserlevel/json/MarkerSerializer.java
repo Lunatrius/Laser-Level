@@ -22,6 +22,7 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
         object.addProperty("x", src.pos.x);
         object.addProperty("y", src.pos.y);
         object.addProperty("z", src.pos.z);
+        object.addProperty("dimension", src.dimension);
         object.addProperty("enabled", src.enabled);
         object.addProperty("spacing", src.spacing);
         object.addProperty("red", src.getRed());
@@ -43,18 +44,19 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
         if (json.isJsonObject()) {
             try {
                 final JsonObject object = json.getAsJsonObject();
-                final int markerLength = object.has("markerlength") ? object.getAsJsonPrimitive("markerlength").getAsInt() : 64;
-                final int x = object.getAsJsonPrimitive("x").getAsInt();
-                final int y = object.getAsJsonPrimitive("y").getAsInt();
-                final int z = object.getAsJsonPrimitive("z").getAsInt();
-                final boolean enabled = object.getAsJsonPrimitive("enabled").getAsBoolean();
-                final int spacing = object.getAsJsonPrimitive("spacing").getAsInt();
-                final int red = object.getAsJsonPrimitive("red").getAsInt();
-                final int green = object.getAsJsonPrimitive("green").getAsInt();
-                final int blue = object.getAsJsonPrimitive("blue").getAsInt();
+                final int markerLength = getAsInt(object, "markerlength", 64);
+                final int x = getAsInt(object, "x", 0);
+                final int y = getAsInt(object, "y", 0);
+                final int z = getAsInt(object, "z", 0);
+                final int dimension = getAsInt(object, "dimension", 0);
+                final boolean enabled = getAsBoolean(object, "enabled", false);
+                final int spacing = getAsInt(object, "spacing", 1);
+                final int red = getAsInt(object, "red", 0);
+                final int green = getAsInt(object, "green", 0);
+                final int blue = getAsInt(object, "blue", 0);
                 final JsonObject sides = object.getAsJsonObject("sides");
 
-                final Marker marker = new Marker(new BlockPos(x, y, z), spacing, 0x000000);
+                final Marker marker = new Marker(new BlockPos(x, y, z), dimension, spacing, 0x000000);
                 marker.markerLength = markerLength;
                 marker.enabled = enabled;
                 marker.setRed(red);
@@ -63,7 +65,7 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
 
                 for (final EnumFacing side : EnumFacing.VALUES) {
                     if (sides.has(side.getName())) {
-                        marker.setEnabled(side, sides.getAsJsonPrimitive(side.getName()).getAsBoolean());
+                        marker.setEnabled(side, getAsBoolean(sides, side.getName(), false));
                     }
                 }
 
@@ -73,5 +75,21 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
             }
         }
         return null;
+    }
+
+    private int getAsInt(final JsonObject object, final String memberName, final int defaultValue) {
+        if (object.has(memberName)) {
+            return object.getAsJsonPrimitive(memberName).getAsInt();
+        }
+
+        return defaultValue;
+    }
+
+    private boolean getAsBoolean(final JsonObject object, final String memberName, final boolean defaultValue) {
+        if (object.has(memberName)) {
+            return object.getAsJsonPrimitive(memberName).getAsBoolean();
+        }
+
+        return defaultValue;
     }
 }

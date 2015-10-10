@@ -1,13 +1,13 @@
 package com.github.lunatrius.laserlevel.marker;
 
 import com.github.lunatrius.core.util.MBlockPos;
-import com.github.lunatrius.laserlevel.marker.Constants;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 
 public class Marker {
     public final MBlockPos pos;
+    public int dimension;
     public boolean enabled;
     public int spacing;
     public int rgb;
@@ -15,8 +15,9 @@ public class Marker {
 
     private boolean sides[] = new boolean[EnumFacing.VALUES.length];
 
-    public Marker(final BlockPos pos, final int spacing, final int rgb) {
+    public Marker(final BlockPos pos, final int dimension, final int spacing, final int rgb) {
         this.pos = new MBlockPos(pos);
+        this.dimension = dimension;
         this.enabled = true;
         this.spacing = spacing;
         this.rgb = rgb;
