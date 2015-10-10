@@ -99,20 +99,20 @@ public class GuiMarkerEdit extends GuiScreenBase {
 
         final int centerX = this.width / 2;
         final int centerY = this.height / 2;
-        final int nfOffsetX = 105;
+        final int nfOffsetX = 25;
         final int nfHeight = 20;
         int id = -1;
 
-        this.nfMarkerLength = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX, centerY - nfHeight / 2 - (nfHeight + 5) * 4);
+        this.nfMarkerLength = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 4);
         this.buttonList.add(this.nfMarkerLength);
 
-        this.nfX = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX - nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 3);
+        this.nfX = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 3);
         this.buttonList.add(this.nfX);
 
-        this.nfY = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX - nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 2);
+        this.nfY = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 2);
         this.buttonList.add(this.nfY);
 
-        this.nfZ = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX - nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 1);
+        this.nfZ = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 1);
         this.buttonList.add(this.nfZ);
 
         final int sliderWidth = 250;
@@ -138,12 +138,13 @@ public class GuiMarkerEdit extends GuiScreenBase {
                 EnumFacing.WEST, EnumFacing.EAST, EnumFacing.DOWN, EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH
         };
 
+        final int cbBaseOffsetX = -120;
         for (int i = 0; i < sides.length; i++) {
             final EnumFacing side = sides[i];
             final int cbOffsetX = side.ordinal() % 2 == 0 ? 0 : 60;
             final int cbHeight = 20;
 
-            this.checkBoxes[side.ordinal()] = new GuiCheckBox(++id, centerX + cbOffsetX + 5, centerY + (cbHeight + 5) * (i / 2 - 3) - 5, I18n.format(Names.Gui.GuiMarkerEdit.SIDE_BASE + side.getName()), this.marker.isEnabled(side));
+            this.checkBoxes[side.ordinal()] = new GuiCheckBox(++id, centerX + cbBaseOffsetX + cbOffsetX, centerY + (cbHeight + 5) * (i / 2 - 3) - 5, I18n.format(Names.Gui.GuiMarkerEdit.SIDE_BASE + side.getName()), this.marker.isEnabled(side));
             this.buttonList.add(this.checkBoxes[side.ordinal()]);
         }
 
@@ -239,13 +240,14 @@ public class GuiMarkerEdit extends GuiScreenBase {
 
         final int centerX = this.width / 2;
         final int centerY = this.height / 2;
+        final int nfOffsetX = 20;
         final int nfHeight = 20;
 
         drawCenteredString(this.fontRendererObj, this.strTitle, centerX, 4, 0x00FFFFFF);
-        drawString(this.fontRendererObj, this.strMarkerLength, centerX - 120, centerY - (nfHeight + 5) * 3 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
-        drawString(this.fontRendererObj, this.strX, centerX - 120, centerY - (nfHeight + 5) * 2 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
-        drawString(this.fontRendererObj, this.strY, centerX - 120, centerY - (nfHeight + 5) * 1 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
-        drawString(this.fontRendererObj, this.strZ, centerX - 120, centerY - (nfHeight + 5) * 0 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
+        drawString(this.fontRendererObj, this.strMarkerLength, centerX + nfOffsetX - this.fontRendererObj.getStringWidth(this.strMarkerLength), centerY - (nfHeight + 5) * 3 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
+        drawString(this.fontRendererObj, this.strX, centerX + nfOffsetX - this.fontRendererObj.getStringWidth(this.strX), centerY - (nfHeight + 5) * 2 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
+        drawString(this.fontRendererObj, this.strY, centerX + nfOffsetX - this.fontRendererObj.getStringWidth(this.strY), centerY - (nfHeight + 5) * 1 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
+        drawString(this.fontRendererObj, this.strZ, centerX + nfOffsetX - this.fontRendererObj.getStringWidth(this.strZ), centerY - (nfHeight + 5) * 0 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
 
         final Tessellator tessellator = Tessellator.getInstance();
         final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
