@@ -93,7 +93,7 @@ public class RenderMarkers {
                 continue;
             }
 
-            final int length = marker.markerLength;
+            final int length = marker.markerLength + 64;
             if (marker.pos.distanceSqToCenter(this.playerPosition.x, this.playerPosition.y, this.playerPosition.z) > length * length) {
                 continue;
             }
