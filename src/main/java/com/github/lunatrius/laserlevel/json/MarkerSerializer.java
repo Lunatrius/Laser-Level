@@ -1,5 +1,6 @@
 package com.github.lunatrius.laserlevel.json;
 
+import com.github.lunatrius.laserlevel.marker.Constants;
 import com.github.lunatrius.laserlevel.marker.Marker;
 import com.github.lunatrius.laserlevel.reference.Reference;
 import com.google.gson.JsonDeserializationContext;
@@ -44,7 +45,7 @@ public class MarkerSerializer implements JsonSerializer<Marker>, JsonDeserialize
         if (json.isJsonObject()) {
             try {
                 final JsonObject object = json.getAsJsonObject();
-                final int markerLength = getAsInt(object, "markerlength", 64);
+                final int markerLength = getAsInt(object, "markerlength", Constants.Rendering.DEFAULT_LENGTH);
                 final int x = getAsInt(object, "x", 0);
                 final int y = getAsInt(object, "y", 0);
                 final int z = getAsInt(object, "z", 0);
