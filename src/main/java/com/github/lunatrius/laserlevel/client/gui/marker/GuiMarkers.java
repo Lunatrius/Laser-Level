@@ -68,6 +68,8 @@ public class GuiMarkers extends GuiScreenBase {
             } else if (guiButton.id == this.btnDelete.id) {
                 LaserLevel.proxy.removeMarker(this.guiMarkersSlot.selectedIndex);
                 this.guiMarkersSlot.selectedIndex = -1;
+                this.btnDelete.enabled = false;
+                this.btnEdit.enabled = false;
             } else if (guiButton.id == this.btnEdit.id) {
                 if (this.guiMarkersSlot.selectedIndex != -1) {
                     final Marker marker = LaserLevel.proxy.getMarker(this.guiMarkersSlot.selectedIndex);
