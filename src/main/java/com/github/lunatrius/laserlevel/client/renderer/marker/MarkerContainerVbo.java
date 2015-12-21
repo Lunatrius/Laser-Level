@@ -2,12 +2,12 @@ package com.github.lunatrius.laserlevel.client.renderer.marker;
 
 import com.github.lunatrius.core.client.renderer.GeometryMasks;
 import com.github.lunatrius.core.client.renderer.GeometryTessellator;
-import com.github.lunatrius.core.client.renderer.vertex.VertexFormats;
 import com.github.lunatrius.laserlevel.marker.Constants;
 import com.github.lunatrius.laserlevel.marker.Marker;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import org.lwjgl.opengl.GL11;
 
@@ -15,8 +15,8 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 public class MarkerContainerVbo extends MarkerContainer {
-    private VertexBuffer vertexBufferQuads = new VertexBuffer(VertexFormats.ABSTRACT);
-    private VertexBuffer vertexBufferLines = new VertexBuffer(VertexFormats.ABSTRACT);
+    private VertexBuffer vertexBufferQuads = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
+    private VertexBuffer vertexBufferLines = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
 
     @Override
     public void compile(final List<Marker> markers) {
@@ -27,24 +27,22 @@ public class MarkerContainerVbo extends MarkerContainer {
         tessellator.setTranslation(0, 0, 0);
         tessellator.setDelta(Constants.Rendering.BLOCK_DELTA);
 
-        tessellator.startQuads();
+        tessellator.beginQuads();
         for (final Marker marker : markers) {
             renderMarker(tessellator, GeometryMasks.Quad.ALL, marker);
         }
 
         final ByteBuffer byteBuffer = worldRenderer.getByteBuffer();
-        final int byteIndex = worldRenderer.finishDrawing();
-        this.vertexBufferQuads.bufferData(byteBuffer, byteIndex);
+        this.vertexBufferQuads.func_181722_a(byteBuffer);
 
-        tessellator.startLines();
+        tessellator.beginLines();
         for (final Marker marker : markers) {
             renderMarker(tessellator, GeometryMasks.Line.ALL, marker);
             renderGuide(tessellator, marker);
         }
 
         final ByteBuffer byteBuffer2 = worldRenderer.getByteBuffer();
-        final int byteIndex2 = worldRenderer.finishDrawing();
-        this.vertexBufferLines.bufferData(byteBuffer2, byteIndex2);
+        this.vertexBufferLines.func_181722_a(byteBuffer2);
     }
 
     @Override

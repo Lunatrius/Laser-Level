@@ -1,5 +1,6 @@
 package com.github.lunatrius.laserlevel.client.gui.marker;
 
+import com.github.lunatrius.core.client.gui.GuiHelper;
 import com.github.lunatrius.core.util.MBlockPos;
 import com.github.lunatrius.laserlevel.client.renderer.RenderMarkers;
 import com.github.lunatrius.laserlevel.marker.Marker;
@@ -10,6 +11,7 @@ import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.opengl.GL11;
@@ -113,33 +115,12 @@ public class GuiMarkersSlot extends GuiSlot {
         GlStateManager.disableAlpha();
         GlStateManager.shadeModel(GL11.GL_SMOOTH);
         GlStateManager.disableTexture2D();
-        worldRenderer.startDrawingQuads();
+        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
-        worldRenderer.setColorRGBA_I(0x000000, 0xFF);
-        worldRenderer.addVertex(xx + 0, yy + 0, 0);
-        worldRenderer.addVertex(xx + 0, yy + h, 0);
-        worldRenderer.addVertex(xx + w, yy + h, 0);
-        worldRenderer.addVertex(xx + w, yy + 0, 0);
-
-        worldRenderer.setColorRGBA_I(marker.rgb, 0xFF);
-        worldRenderer.addVertex(xx + 1 + 0, yy + 1 + 0, 0);
-        worldRenderer.addVertex(xx + 1 + 0, yy - 1 + h, 0);
-        worldRenderer.addVertex(xx - 1 + w, yy - 1 + h, 0);
-        worldRenderer.addVertex(xx - 1 + w, yy + 1 + 0, 0);
-
-        worldRenderer.setColorOpaque_I(0x00404040);
-        worldRenderer.setColorRGBA_I(0x404040, 0x7f);
-        worldRenderer.addVertex(x - 2, y - 2, -1);
-        worldRenderer.addVertex(x - 2, y - 2 + getSlotHeight(), -1);
-        worldRenderer.addVertex(x - 2 + getListWidth(), y - 2 + getSlotHeight(), -1);
-        worldRenderer.addVertex(x - 2 + getListWidth(), y - 2, -1);
-
-        worldRenderer.setColorOpaque_I(0x00808080);
-        worldRenderer.setColorRGBA_I(0xC0C0C0, 0x3f);
-        worldRenderer.addVertex(x - 1, y - 1, -1);
-        worldRenderer.addVertex(x - 1, y - 1 + getSlotHeight() - 2, -1);
-        worldRenderer.addVertex(x - 1 + getListWidth() - 2, y - 1 + getSlotHeight() - 2, -1);
-        worldRenderer.addVertex(x - 1 + getListWidth() - 2, y - 1, -1);
+        GuiHelper.drawColoredRectangle(worldRenderer, xx, yy, xx + w, yy + h, 0, 0x00, 0x00, 0x00, 0xFF);
+        GuiHelper.drawColoredRectangle(worldRenderer, xx + 1, yy + 1, xx - 1 + w, yy - 1 + h, 0, marker.getRed(), marker.getGreen(), marker.getBlue(), 0xFF);
+        GuiHelper.drawColoredRectangle(worldRenderer, x - 2, y - 2, x - 2 + getListWidth(), y - 2 + getSlotHeight(), -1, 0x40, 0x40, 0x40, 0x7F);
+        GuiHelper.drawColoredRectangle(worldRenderer, x - 1, y - 1, x - 1 + getListWidth() - 2, y - 1 + getSlotHeight() - 2, -1, 0xC0, 0xC0, 0xC0, 0x3F);
 
         tessellator.draw();
         GlStateManager.enableTexture2D();

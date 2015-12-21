@@ -1,9 +1,9 @@
 package com.github.lunatrius.laserlevel.proxy;
 
-import com.github.lunatrius.core.version.VersionChecker;
 import com.github.lunatrius.laserlevel.marker.Marker;
 import com.github.lunatrius.laserlevel.reference.Reference;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -13,7 +13,7 @@ public class CommonProxy {
     public void preInit(final FMLPreInitializationEvent event) {
         Reference.logger = event.getModLog();
 
-        VersionChecker.registerMod(event.getModMetadata(), Reference.FORGE);
+        FMLInterModComms.sendMessage("LunatriusCore", "checkUpdate", Reference.FORGE);
     }
 
     public void init(final FMLInitializationEvent event) {

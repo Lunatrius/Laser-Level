@@ -31,7 +31,7 @@ public abstract class MarkerContainer {
             return;
         }
 
-        tessellator.drawCuboid(marker.pos, sides, marker.rgb, Constants.Rendering.ALPHA_QUADS);
+        tessellator.drawCuboid(marker.pos, sides, marker.rgb | Constants.Rendering.ALPHA_QUADS << 24);
 
         final EnumFacing[] values = EnumFacing.VALUES;
 
@@ -42,7 +42,7 @@ public abstract class MarkerContainer {
 
             for (int next = marker.spacing; next <= marker.markerLength; next += marker.spacing) {
                 final MBlockPos pos = marker.pos.offset(side, next);
-                tessellator.drawCuboid(pos, sides, marker.rgb, Constants.Rendering.ALPHA_QUADS);
+                tessellator.drawCuboid(pos, sides, marker.rgb | Constants.Rendering.ALPHA_QUADS << 24);
             }
         }
     }
@@ -53,33 +53,42 @@ public abstract class MarkerContainer {
         }
 
         final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-        worldRenderer.setColorRGBA_I(marker.rgb, Constants.Rendering.ALPHA_LINES);
 
         int hi, lo;
 
         hi = marker.isEnabled(EnumFacing.EAST) ? marker.markerLength : 0;
-        lo = marker.isEnabled(EnumFacing.WEST) ? marker.markerLength : 0;
+        lo = marker.isEnabled(EnumFacing.WEST) ? -marker.markerLength : 0;
 
         if (hi != 0 || lo != 0) {
-            worldRenderer.addVertex(marker.pos.x + 0.5 + hi, marker.pos.y + 0.5, marker.pos.z + 0.5);
-            worldRenderer.addVertex(marker.pos.x + 0.5 - lo, marker.pos.y + 0.5, marker.pos.z + 0.5);
+            drawMarkerLine(worldRenderer, marker, hi, 0, 0, lo, 0, 0);
         }
 
         hi = marker.isEnabled(EnumFacing.UP) ? marker.markerLength : 0;
-        lo = marker.isEnabled(EnumFacing.DOWN) ? marker.markerLength : 0;
+        lo = marker.isEnabled(EnumFacing.DOWN) ? -marker.markerLength : 0;
 
         if (hi != 0 || lo != 0) {
-            worldRenderer.addVertex(marker.pos.x + 0.5, marker.pos.y + 0.5 + hi, marker.pos.z + 0.5);
-            worldRenderer.addVertex(marker.pos.x + 0.5, marker.pos.y + 0.5 - lo, marker.pos.z + 0.5);
+            drawMarkerLine(worldRenderer, marker, 0, hi, 0, 0, lo, 0);
         }
 
         hi = marker.isEnabled(EnumFacing.SOUTH) ? marker.markerLength : 0;
-        lo = marker.isEnabled(EnumFacing.NORTH) ? marker.markerLength : 0;
+        lo = marker.isEnabled(EnumFacing.NORTH) ? -marker.markerLength : 0;
 
         if (hi != 0 || lo != 0) {
-            worldRenderer.addVertex(marker.pos.x + 0.5, marker.pos.y + 0.5, marker.pos.z + 0.5 + hi);
-            worldRenderer.addVertex(marker.pos.x + 0.5, marker.pos.y + 0.5, marker.pos.z + 0.5 - lo);
+            drawMarkerLine(worldRenderer, marker, 0, 0, hi, 0, 0, lo);
         }
+    }
+
+    private void drawMarkerLine(final WorldRenderer worldRenderer, final Marker marker, final int x0, final int y0, final int z0, final int x1, final int y1, final int z1) {
+        final double x = marker.pos.x + 0.5;
+        final double y = marker.pos.y + 0.5;
+        final double z = marker.pos.z + 0.5;
+        final int r = marker.getRed();
+        final int g = marker.getGreen();
+        final int b = marker.getBlue();
+        final int a = Constants.Rendering.ALPHA_LINES;
+
+        worldRenderer.pos(x + x0, y + y0, z + z0).color(r, g, b, a).endVertex();
+        worldRenderer.pos(x + x1, y + y1, z + z1).color(r, g, b, a).endVertex();
     }
 
     public abstract void compile(List<Marker> markers);

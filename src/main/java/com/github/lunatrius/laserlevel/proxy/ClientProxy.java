@@ -8,7 +8,6 @@ import com.github.lunatrius.laserlevel.reference.Reference;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -35,8 +34,7 @@ public class ClientProxy extends CommonProxy {
     public void init(final FMLInitializationEvent event) {
         super.init(event);
 
-        FMLCommonHandler.instance().bus().register(KeyInputHandler.INSTANCE);
-
+        MinecraftForge.EVENT_BUS.register(KeyInputHandler.INSTANCE);
         MinecraftForge.EVENT_BUS.register(RenderMarkers.INSTANCE);
     }
 

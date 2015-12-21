@@ -23,14 +23,14 @@ public class MarkerContainerList extends MarkerContainer {
         tessellator.setTranslation(0, 0, 0);
         tessellator.setDelta(Constants.Rendering.BLOCK_DELTA);
 
-        tessellator.startQuads();
+        tessellator.beginQuads();
         for (final Marker marker : markers) {
             renderMarker(tessellator, GeometryMasks.Quad.ALL, marker);
         }
 
         tessellator.draw();
 
-        tessellator.startLines();
+        tessellator.beginLines();
         for (final Marker marker : markers) {
             renderMarker(tessellator, GeometryMasks.Line.ALL, marker);
             renderGuide(tessellator, marker);

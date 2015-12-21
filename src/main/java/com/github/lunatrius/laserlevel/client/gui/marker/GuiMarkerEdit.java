@@ -1,5 +1,6 @@
 package com.github.lunatrius.laserlevel.client.gui.marker;
 
+import com.github.lunatrius.core.client.gui.GuiHelper;
 import com.github.lunatrius.core.client.gui.GuiNumericField;
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.laserlevel.client.renderer.RenderMarkers;
@@ -14,6 +15,7 @@ import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
@@ -55,7 +57,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
         }
 
         @Override
-        public void func_175320_a(final int id, final float value) {
+        public void onTick(final int id, final float value) {
             if (this.prevId != id || this.prevValue != value) {
                 if (GuiMarkerEdit.this.sliderSpacing.id == id) {
                     GuiMarkerEdit.this.marker.spacing = Math.round(value);
@@ -83,7 +85,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
 
     private final GuiSlider.FormatHelper formatValue = new GuiSlider.FormatHelper() {
         @Override
-        public String func_175318_a(final int id, final String name, final float value) {
+        public String getText(final int id, final String name, final float value) {
             return I18n.format(Names.Gui.GuiMarkerEdit.SLIDER_FORMAT, name, Math.round(value));
         }
     };
@@ -237,7 +239,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
 
     @Override
     public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
-        renderBackground(0, 16, this.height - 5 - 20 - 3, this.height, 0xFF, 0xFF);
+        renderBackground(0, 16, this.height - 5 - 20 - 3, this.height);
 
         final int centerX = this.width / 2;
         final int centerY = this.height / 2;
@@ -262,19 +264,10 @@ public class GuiMarkerEdit extends GuiScreenBase {
         GlStateManager.disableAlpha();
         GlStateManager.shadeModel(GL11.GL_SMOOTH);
         GlStateManager.disableTexture2D();
-        worldRenderer.startDrawingQuads();
+        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
-        worldRenderer.setColorRGBA_I(0x000000, 0xFF);
-        worldRenderer.addVertex(x + 0, y + 0, 0);
-        worldRenderer.addVertex(x + 0, y + h, 0);
-        worldRenderer.addVertex(x + w, y + h, 0);
-        worldRenderer.addVertex(x + w, y + 0, 0);
-
-        worldRenderer.setColorRGBA_I(this.marker.rgb, 0xFF);
-        worldRenderer.addVertex(x + 1 + 0, y + 1 + 0, 0);
-        worldRenderer.addVertex(x + 1 + 0, y - 1 + h, 0);
-        worldRenderer.addVertex(x - 1 + w, y - 1 + h, 0);
-        worldRenderer.addVertex(x - 1 + w, y + 1 + 0, 0);
+        GuiHelper.drawColoredRectangle(worldRenderer, x, y, x + w, y + h, 0, 0x00, 0x00, 0x00, 0xFF);
+        GuiHelper.drawColoredRectangle(worldRenderer, x + 1, y + 1, x - 1 + w, y - 1 + h, 0, this.marker.getRed(), this.marker.getGreen(), this.marker.getBlue(), 0xFF);
 
         tessellator.draw();
         GlStateManager.enableTexture2D();
@@ -285,53 +278,30 @@ public class GuiMarkerEdit extends GuiScreenBase {
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    private void renderBackground(final int y0, final int y1, final int y2, final int y3, final int alpha0, final int alpha1) {
+    private void renderBackground(final int y0, final int y1, final int y2, final int y3) {
         final Tessellator tessellator = Tessellator.getInstance();
         final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-        final double textureDim = 32.0;
+        final double textureWidth = 32.0;
+        final double textureHeight = 32.0;
         final int shadowHeight = 4;
 
         this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 
-        worldRenderer.startDrawingQuads();
-
-        worldRenderer.setColorRGBA_I(0x404040, alpha1);
-        worldRenderer.addVertexWithUV(0, y1, 0.0, 0.0, y1 / textureDim);
-        worldRenderer.addVertexWithUV(this.width, y1, 0.0, this.width / textureDim, y1 / textureDim);
-        worldRenderer.setColorRGBA_I(0x404040, alpha0);
-        worldRenderer.addVertexWithUV(this.width, y0, 0.0, this.width / textureDim, y0 / textureDim);
-        worldRenderer.addVertexWithUV(0, y0, 0.0, 0.0, y0 / textureDim);
-
-        worldRenderer.setColorRGBA_I(0x404040, alpha1);
-        worldRenderer.addVertexWithUV(0, y3, 0.0, 0.0, y3 / textureDim);
-        worldRenderer.addVertexWithUV(this.width, y3, 0.0, this.width / textureDim, y3 / textureDim);
-        worldRenderer.setColorRGBA_I(0x404040, alpha0);
-        worldRenderer.addVertexWithUV(this.width, y2, 0.0, this.width / textureDim, y2 / textureDim);
-        worldRenderer.addVertexWithUV(0, y2, 0.0, 0.0, y2 / textureDim);
+        GuiHelper.drawTexturedRectangle(worldRenderer, 0, y0, this.width, y1, 0.0, textureWidth, textureHeight, 0xFF404040);
+        GuiHelper.drawTexturedRectangle(worldRenderer, 0, y2, this.width, y3, 0.0, textureWidth, textureHeight, 0xFF404040);
 
         tessellator.draw();
-
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 0, 1);
         GlStateManager.disableAlpha();
         GlStateManager.shadeModel(GL11.GL_SMOOTH);
         GlStateManager.disableTexture2D();
-        worldRenderer.startDrawingQuads();
+        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
-        worldRenderer.setColorRGBA_I(0x000000, 0x00);
-        worldRenderer.addVertexWithUV(0, y1 + shadowHeight, 0.0, 0.0, 1.0);
-        worldRenderer.addVertexWithUV(this.width, y1 + shadowHeight, 0.0, 1.0, 1.0);
-        worldRenderer.setColorRGBA_I(0x000000, 0xFF);
-        worldRenderer.addVertexWithUV(this.width, y1, 0.0, 1.0, 0.0);
-        worldRenderer.addVertexWithUV(0, y1, 0.0, 0.0, 0.0);
-
-        worldRenderer.setColorRGBA_I(0x000000, 0xFF);
-        worldRenderer.addVertexWithUV(0, y2, 0.0, 0.0, 1.0);
-        worldRenderer.addVertexWithUV(this.width, y2, 0.0, 1.0, 1.0);
-        worldRenderer.setColorRGBA_I(0x000000, 0x00);
-        worldRenderer.addVertexWithUV(this.width, y2 - shadowHeight, 0.0, 1.0, 0.0);
-        worldRenderer.addVertexWithUV(0, y2 - shadowHeight, 0.0, 0.0, 0.0);
+        GuiHelper.drawVerticalGradientRectangle(worldRenderer, 0, y1, this.width, y1 + shadowHeight, 0.0, 0xFF000000, 0x00000000);
+        GuiHelper.drawVerticalGradientRectangle(worldRenderer, 0, y2 - shadowHeight, this.width, y2, 0.0, 0x00000000, 0xFF000000);
 
         tessellator.draw();
         GlStateManager.enableTexture2D();
