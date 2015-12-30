@@ -32,8 +32,7 @@ public class MarkerContainerVbo extends MarkerContainer {
             renderMarker(tessellator, GeometryMasks.Quad.ALL, marker);
         }
 
-        final ByteBuffer byteBuffer = worldRenderer.getByteBuffer();
-        this.vertexBufferQuads.func_181722_a(byteBuffer);
+        this.vertexBufferQuads.bufferData(worldRenderer.getByteBuffer());
 
         tessellator.beginLines();
         for (final Marker marker : markers) {
@@ -41,8 +40,7 @@ public class MarkerContainerVbo extends MarkerContainer {
             renderGuide(tessellator, marker);
         }
 
-        final ByteBuffer byteBuffer2 = worldRenderer.getByteBuffer();
-        this.vertexBufferLines.func_181722_a(byteBuffer2);
+        this.vertexBufferLines.bufferData(worldRenderer.getByteBuffer());
     }
 
     @Override
