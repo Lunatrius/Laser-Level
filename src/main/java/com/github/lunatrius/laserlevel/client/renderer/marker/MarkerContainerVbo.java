@@ -33,6 +33,7 @@ public class MarkerContainerVbo extends MarkerContainer {
         }
 
         this.vertexBufferQuads.bufferData(worldRenderer.getByteBuffer());
+        worldRenderer.finishDrawing();
 
         tessellator.beginLines();
         for (final Marker marker : markers) {
@@ -41,6 +42,7 @@ public class MarkerContainerVbo extends MarkerContainer {
         }
 
         this.vertexBufferLines.bufferData(worldRenderer.getByteBuffer());
+        worldRenderer.finishDrawing();
     }
 
     @Override
