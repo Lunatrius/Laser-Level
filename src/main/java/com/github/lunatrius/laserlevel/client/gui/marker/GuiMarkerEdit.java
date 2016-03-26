@@ -14,7 +14,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
@@ -253,7 +253,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
         drawString(this.fontRendererObj, this.strZ, centerX + nfOffsetX - this.fontRendererObj.getStringWidth(this.strZ), centerY - (nfHeight + 5) * 0 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
 
         final Tessellator tessellator = Tessellator.getInstance();
-        final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        final VertexBuffer buffer = tessellator.getBuffer();
         final int w = 250;
         final int h = 20;
         final int x = centerX - w / 2;
@@ -264,10 +264,10 @@ public class GuiMarkerEdit extends GuiScreenBase {
         GlStateManager.disableAlpha();
         GlStateManager.shadeModel(GL11.GL_SMOOTH);
         GlStateManager.disableTexture2D();
-        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
-        GuiHelper.drawColoredRectangle(worldRenderer, x, y, x + w, y + h, 0, 0x00, 0x00, 0x00, 0xFF);
-        GuiHelper.drawColoredRectangle(worldRenderer, x + 1, y + 1, x - 1 + w, y - 1 + h, 0, this.marker.getRed(), this.marker.getGreen(), this.marker.getBlue(), 0xFF);
+        GuiHelper.drawColoredRectangle(buffer, x, y, x + w, y + h, 0, 0x00, 0x00, 0x00, 0xFF);
+        GuiHelper.drawColoredRectangle(buffer, x + 1, y + 1, x - 1 + w, y - 1 + h, 0, this.marker.getRed(), this.marker.getGreen(), this.marker.getBlue(), 0xFF);
 
         tessellator.draw();
         GlStateManager.enableTexture2D();
@@ -280,17 +280,17 @@ public class GuiMarkerEdit extends GuiScreenBase {
 
     private void renderBackground(final int y0, final int y1, final int y2, final int y3) {
         final Tessellator tessellator = Tessellator.getInstance();
-        final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        final VertexBuffer buffer = tessellator.getBuffer();
         final double textureWidth = 32.0;
         final double textureHeight = 32.0;
         final int shadowHeight = 4;
 
         this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 
-        GuiHelper.drawTexturedRectangle(worldRenderer, 0, y0, this.width, y1, 0.0, textureWidth, textureHeight, 0xFF404040);
-        GuiHelper.drawTexturedRectangle(worldRenderer, 0, y2, this.width, y3, 0.0, textureWidth, textureHeight, 0xFF404040);
+        GuiHelper.drawTexturedRectangle(buffer, 0, y0, this.width, y1, 0.0, textureWidth, textureHeight, 0xFF404040);
+        GuiHelper.drawTexturedRectangle(buffer, 0, y2, this.width, y3, 0.0, textureWidth, textureHeight, 0xFF404040);
 
         tessellator.draw();
         GlStateManager.enableBlend();
@@ -298,10 +298,10 @@ public class GuiMarkerEdit extends GuiScreenBase {
         GlStateManager.disableAlpha();
         GlStateManager.shadeModel(GL11.GL_SMOOTH);
         GlStateManager.disableTexture2D();
-        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
-        GuiHelper.drawVerticalGradientRectangle(worldRenderer, 0, y1, this.width, y1 + shadowHeight, 0.0, 0xFF000000, 0x00000000);
-        GuiHelper.drawVerticalGradientRectangle(worldRenderer, 0, y2 - shadowHeight, this.width, y2, 0.0, 0x00000000, 0xFF000000);
+        GuiHelper.drawVerticalGradientRectangle(buffer, 0, y1, this.width, y1 + shadowHeight, 0.0, 0xFF000000, 0x00000000);
+        GuiHelper.drawVerticalGradientRectangle(buffer, 0, y2 - shadowHeight, this.width, y2, 0.0, 0x00000000, 0xFF000000);
 
         tessellator.draw();
         GlStateManager.enableTexture2D();

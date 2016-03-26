@@ -37,9 +37,9 @@ public class RenderMarkers {
     public void onRenderWorldLast(final RenderWorldLastEvent event) {
         final EntityPlayerSP player = this.minecraft.thePlayer;
         if (player != null) {
-            this.playerPosition.x = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.partialTicks;
-            this.playerPosition.y = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.partialTicks;
-            this.playerPosition.z = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
+            this.playerPosition.x = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.getPartialTicks();
+            this.playerPosition.y = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.getPartialTicks();
+            this.playerPosition.z = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.getPartialTicks();
 
             this.profiler.startSection("laserlevel");
 

@@ -1,11 +1,11 @@
 package com.github.lunatrius.laserlevel.client.renderer.marker;
 
 import com.github.lunatrius.core.client.renderer.GeometryTessellator;
-import com.github.lunatrius.core.util.MBlockPos;
+import com.github.lunatrius.core.util.math.MBlockPos;
 import com.github.lunatrius.laserlevel.marker.Constants;
 import com.github.lunatrius.laserlevel.marker.Marker;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.util.EnumFacing;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public abstract class MarkerContainer {
             return;
         }
 
-        final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        final VertexBuffer buffer = tessellator.getBuffer();
 
         int hi, lo;
 
@@ -60,25 +60,25 @@ public abstract class MarkerContainer {
         lo = marker.isEnabled(EnumFacing.WEST) ? -marker.markerLength : 0;
 
         if (hi != 0 || lo != 0) {
-            drawMarkerLine(worldRenderer, marker, hi, 0, 0, lo, 0, 0);
+            drawMarkerLine(buffer, marker, hi, 0, 0, lo, 0, 0);
         }
 
         hi = marker.isEnabled(EnumFacing.UP) ? marker.markerLength : 0;
         lo = marker.isEnabled(EnumFacing.DOWN) ? -marker.markerLength : 0;
 
         if (hi != 0 || lo != 0) {
-            drawMarkerLine(worldRenderer, marker, 0, hi, 0, 0, lo, 0);
+            drawMarkerLine(buffer, marker, 0, hi, 0, 0, lo, 0);
         }
 
         hi = marker.isEnabled(EnumFacing.SOUTH) ? marker.markerLength : 0;
         lo = marker.isEnabled(EnumFacing.NORTH) ? -marker.markerLength : 0;
 
         if (hi != 0 || lo != 0) {
-            drawMarkerLine(worldRenderer, marker, 0, 0, hi, 0, 0, lo);
+            drawMarkerLine(buffer, marker, 0, 0, hi, 0, 0, lo);
         }
     }
 
-    private void drawMarkerLine(final WorldRenderer worldRenderer, final Marker marker, final int x0, final int y0, final int z0, final int x1, final int y1, final int z1) {
+    private void drawMarkerLine(final VertexBuffer buffer, final Marker marker, final int x0, final int y0, final int z0, final int x1, final int y1, final int z1) {
         final double x = marker.pos.x + 0.5;
         final double y = marker.pos.y + 0.5;
         final double z = marker.pos.z + 0.5;
@@ -87,8 +87,8 @@ public abstract class MarkerContainer {
         final int b = marker.getBlue();
         final int a = Constants.Rendering.ALPHA_LINES;
 
-        worldRenderer.pos(x + x0, y + y0, z + z0).color(r, g, b, a).endVertex();
-        worldRenderer.pos(x + x1, y + y1, z + z1).color(r, g, b, a).endVertex();
+        buffer.pos(x + x0, y + y0, z + z0).color(r, g, b, a).endVertex();
+        buffer.pos(x + x1, y + y1, z + z1).color(r, g, b, a).endVertex();
     }
 
     public abstract void compile(List<Marker> markers);

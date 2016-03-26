@@ -1,7 +1,7 @@
 package com.github.lunatrius.laserlevel.client.gui.marker;
 
 import com.github.lunatrius.core.client.gui.GuiHelper;
-import com.github.lunatrius.core.util.MBlockPos;
+import com.github.lunatrius.core.util.math.MBlockPos;
 import com.github.lunatrius.laserlevel.client.renderer.RenderMarkers;
 import com.github.lunatrius.laserlevel.marker.Marker;
 import com.github.lunatrius.laserlevel.proxy.ClientProxy;
@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
@@ -104,7 +104,7 @@ public class GuiMarkersSlot extends GuiSlot {
         this.guiMarkers.drawString(this.mc.fontRendererObj, builder.toString(), x + 2, y + 12, color);
 
         final Tessellator tessellator = Tessellator.getInstance();
-        final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        final VertexBuffer buffer = tessellator.getBuffer();
         final int w = 20;
         final int h = 20;
         final int xx = x + getListWidth() - w - 6;
@@ -115,12 +115,12 @@ public class GuiMarkersSlot extends GuiSlot {
         GlStateManager.disableAlpha();
         GlStateManager.shadeModel(GL11.GL_SMOOTH);
         GlStateManager.disableTexture2D();
-        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
-        GuiHelper.drawColoredRectangle(worldRenderer, xx, yy, xx + w, yy + h, 0, 0x00, 0x00, 0x00, 0xFF);
-        GuiHelper.drawColoredRectangle(worldRenderer, xx + 1, yy + 1, xx - 1 + w, yy - 1 + h, 0, marker.getRed(), marker.getGreen(), marker.getBlue(), 0xFF);
-        GuiHelper.drawColoredRectangle(worldRenderer, x - 2, y - 2, x - 2 + getListWidth(), y - 2 + getSlotHeight(), -1, 0x40, 0x40, 0x40, 0x7F);
-        GuiHelper.drawColoredRectangle(worldRenderer, x - 1, y - 1, x - 1 + getListWidth() - 2, y - 1 + getSlotHeight() - 2, -1, 0xC0, 0xC0, 0xC0, 0x3F);
+        GuiHelper.drawColoredRectangle(buffer, xx, yy, xx + w, yy + h, 0, 0x00, 0x00, 0x00, 0xFF);
+        GuiHelper.drawColoredRectangle(buffer, xx + 1, yy + 1, xx - 1 + w, yy - 1 + h, 0, marker.getRed(), marker.getGreen(), marker.getBlue(), 0xFF);
+        GuiHelper.drawColoredRectangle(buffer, x - 2, y - 2, x - 2 + getListWidth(), y - 2 + getSlotHeight(), -1, 0x40, 0x40, 0x40, 0x7F);
+        GuiHelper.drawColoredRectangle(buffer, x - 1, y - 1, x - 1 + getListWidth() - 2, y - 1 + getSlotHeight() - 2, -1, 0xC0, 0xC0, 0xC0, 0x3F);
 
         tessellator.draw();
         GlStateManager.enableTexture2D();

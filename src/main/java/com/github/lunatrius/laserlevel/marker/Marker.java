@@ -1,9 +1,9 @@
 package com.github.lunatrius.laserlevel.marker;
 
-import com.github.lunatrius.core.util.MBlockPos;
-import net.minecraft.util.BlockPos;
+import com.github.lunatrius.core.util.math.MBlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 public class Marker {
     public final MBlockPos pos;

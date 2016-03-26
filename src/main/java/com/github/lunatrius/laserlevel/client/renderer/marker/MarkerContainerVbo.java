@@ -6,12 +6,10 @@ import com.github.lunatrius.laserlevel.marker.Constants;
 import com.github.lunatrius.laserlevel.marker.Marker;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import org.lwjgl.opengl.GL11;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 public class MarkerContainerVbo extends MarkerContainer {
@@ -23,7 +21,7 @@ public class MarkerContainerVbo extends MarkerContainer {
         this.initialized = true;
 
         final GeometryTessellator tessellator = GeometryTessellator.getInstance();
-        final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        final net.minecraft.client.renderer.VertexBuffer buffer = tessellator.getBuffer();
         tessellator.setTranslation(0, 0, 0);
         tessellator.setDelta(Constants.Rendering.BLOCK_DELTA);
 
@@ -32,8 +30,8 @@ public class MarkerContainerVbo extends MarkerContainer {
             renderMarker(tessellator, GeometryMasks.Quad.ALL, marker);
         }
 
-        this.vertexBufferQuads.bufferData(worldRenderer.getByteBuffer());
-        worldRenderer.finishDrawing();
+        this.vertexBufferQuads.bufferData(buffer.getByteBuffer());
+        buffer.finishDrawing();
 
         tessellator.beginLines();
         for (final Marker marker : markers) {
@@ -41,8 +39,8 @@ public class MarkerContainerVbo extends MarkerContainer {
             renderGuide(tessellator, marker);
         }
 
-        this.vertexBufferLines.bufferData(worldRenderer.getByteBuffer());
-        worldRenderer.finishDrawing();
+        this.vertexBufferLines.bufferData(buffer.getByteBuffer());
+        buffer.finishDrawing();
     }
 
     @Override
