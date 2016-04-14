@@ -285,7 +285,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
         final double textureHeight = 32.0;
         final int shadowHeight = 4;
 
-        this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
+        this.mc.getTextureManager().bindTexture(Gui.OPTIONS_BACKGROUND);
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 
