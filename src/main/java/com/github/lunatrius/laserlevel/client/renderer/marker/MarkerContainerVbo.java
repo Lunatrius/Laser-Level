@@ -30,8 +30,8 @@ public class MarkerContainerVbo extends MarkerContainer {
             renderMarker(tessellator, GeometryMasks.Quad.ALL, marker);
         }
 
-        this.vertexBufferQuads.bufferData(buffer.getByteBuffer());
         buffer.finishDrawing();
+        this.vertexBufferQuads.bufferData(buffer.getByteBuffer());
 
         tessellator.beginLines();
         for (final Marker marker : markers) {
@@ -39,8 +39,8 @@ public class MarkerContainerVbo extends MarkerContainer {
             renderGuide(tessellator, marker);
         }
 
-        this.vertexBufferLines.bufferData(buffer.getByteBuffer());
         buffer.finishDrawing();
+        this.vertexBufferLines.bufferData(buffer.getByteBuffer());
     }
 
     @Override

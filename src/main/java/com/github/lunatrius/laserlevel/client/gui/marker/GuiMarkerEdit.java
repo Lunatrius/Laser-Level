@@ -53,11 +53,11 @@ public class GuiMarkerEdit extends GuiScreenBase {
         float prevValue = -1;
 
         @Override
-        public void func_175321_a(final int p_175321_1_, final boolean p_175321_2_) {
+        public void setEntryValue(final int id, final boolean value) {
         }
 
         @Override
-        public void onTick(final int id, final float value) {
+        public void setEntryValue(final int id, final float value) {
             if (this.prevId != id || this.prevValue != value) {
                 if (GuiMarkerEdit.this.sliderSpacing.id == id) {
                     GuiMarkerEdit.this.marker.spacing = Math.round(value);
@@ -79,7 +79,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
         }
 
         @Override
-        public void func_175319_a(final int p_175319_1_, final String p_175319_2_) {
+        public void setEntryValue(final int id, final String value) {
         }
     };
 

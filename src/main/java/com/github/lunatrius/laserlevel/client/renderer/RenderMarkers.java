@@ -6,6 +6,7 @@ import com.github.lunatrius.laserlevel.client.renderer.marker.MarkerContainerLis
 import com.github.lunatrius.laserlevel.client.renderer.marker.MarkerContainerVbo;
 import com.github.lunatrius.laserlevel.marker.Marker;
 import com.github.lunatrius.laserlevel.proxy.ClientProxy;
+import com.github.lunatrius.laserlevel.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
@@ -28,6 +29,7 @@ public class RenderMarkers {
     private final Vector3d prevPlayerPosition = new Vector3d();
     private MarkerContainer markerContainer;
     private boolean dirty;
+    private boolean useVbo;
 
     private RenderMarkers() {
         init();
@@ -61,6 +63,14 @@ public class RenderMarkers {
     }
 
     private void render(final EntityPlayer player) {
+        this.profiler.startSection("init");
+        if (this.useVbo != OpenGlHelper.useVbo()) {
+            this.useVbo = OpenGlHelper.useVbo();
+            init();
+
+            Reference.logger.debug("Use VBO: {}", this.useVbo);
+        }
+
         this.profiler.startSection("setup");
         this.markerContainer.setTranslation(-this.playerPosition.x, -this.playerPosition.y, -this.playerPosition.z);
 
