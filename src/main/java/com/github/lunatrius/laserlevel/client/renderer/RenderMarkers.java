@@ -92,17 +92,23 @@ public class RenderMarkers {
 
         this.profiler.endStartSection("draw");
         GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GL11.GL_DST_ALPHA, GL11.GL_ONE_MINUS_DST_ALPHA);
-        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        revertToVanillaState();
 
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         this.markerContainer.draw();
-
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-        GlStateManager.disableBlend();
+
+        revertToVanillaState();
         GlStateManager.popMatrix();
 
         this.profiler.endSection();
+    }
+
+    // revert to vanilla (expected) state
+    private void revertToVanillaState() {
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.disableLighting();
     }
 
     private List<Marker> filterMarkers(final List<Marker> markers, final EntityPlayer player) {
