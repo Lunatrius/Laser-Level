@@ -91,7 +91,16 @@ public class RenderMarkers {
         }
 
         this.profiler.endStartSection("draw");
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_DST_ALPHA, GL11.GL_ONE_MINUS_DST_ALPHA);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+
         this.markerContainer.draw();
+
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
 
         this.profiler.endSection();
     }
