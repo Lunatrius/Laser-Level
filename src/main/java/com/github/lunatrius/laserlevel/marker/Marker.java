@@ -29,7 +29,7 @@ public class Marker {
     }
 
     public void setRed(final int red) {
-        this.rgb = (this.rgb & ~0xFF0000) | (MathHelper.clamp_int(red, 0x00, 0xFF) << 16);
+        this.rgb = (this.rgb & ~0xFF0000) | (MathHelper.clamp(red, 0x00, 0xFF) << 16);
     }
 
     public int getRed() {
@@ -37,7 +37,7 @@ public class Marker {
     }
 
     public void setGreen(final int green) {
-        this.rgb = (this.rgb & ~0x00FF00) | (MathHelper.clamp_int(green, 0x00, 0xFF) << 8);
+        this.rgb = (this.rgb & ~0x00FF00) | (MathHelper.clamp(green, 0x00, 0xFF) << 8);
     }
 
     public int getGreen() {
@@ -45,7 +45,7 @@ public class Marker {
     }
 
     public void setBlue(final int blue) {
-        this.rgb = (this.rgb & ~0x0000FF) | MathHelper.clamp_int(blue, 0x00, 0xFF);
+        this.rgb = (this.rgb & ~0x0000FF) | MathHelper.clamp(blue, 0x00, 0xFF);
     }
 
     public int getBlue() {

@@ -196,8 +196,8 @@ public class GuiMarkerEdit extends GuiScreenBase {
                 updateButtons();
                 RenderMarkers.INSTANCE.markDirty();
             } else if (button.id == this.btnMove.id) {
-                this.marker.pos.set(this.mc.thePlayer);
-                this.marker.dimension = this.mc.thePlayer.dimension;
+                this.marker.pos.set(this.mc.player);
+                this.marker.dimension = this.mc.player.dimension;
                 this.nfX.setValue(this.marker.pos.x);
                 this.nfY.setValue(this.marker.pos.y);
                 this.nfZ.setValue(this.marker.pos.z);

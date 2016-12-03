@@ -2,7 +2,7 @@
 	"modListVersion": 2,
 	"modList": [
 		{
-			"modid": "LaserLevel",
+			"modid": "laserlevel",
 			"name": "Laser Level",
 			"description": "Add markers to make building repetitive structures easier!",
 			"mcversion": "${mcversion}",
@@ -12,9 +12,9 @@
 			],
 			"credits": "",
 			"dependants": [  ],
-			"dependencies": [ "Forge@[${minforgeversion},)", "LunatriusCore@[${coreversion},)" ],
+			"dependencies": [ "forge@[${minforgeversion},)", "lunatriuscore@[${coreversion},)" ],
 			"parent": "",
-			"requiredMods": [ "Forge@[${minforgeversion},)", "LunatriusCore@[${coreversion},)" ],
+			"requiredMods": [ "forge@[${minforgeversion},)", "lunatriuscore@[${coreversion},)" ],
 			"logoFile": "",
 			"screenshots": [  ],
 			"updateUrl": "http://mc.lunatri.us/",

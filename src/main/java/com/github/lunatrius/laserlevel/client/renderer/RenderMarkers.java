@@ -37,7 +37,7 @@ public class RenderMarkers {
 
     @SubscribeEvent
     public void onRenderWorldLast(final RenderWorldLastEvent event) {
-        final EntityPlayerSP player = this.minecraft.thePlayer;
+        final EntityPlayerSP player = this.minecraft.player;
         if (player != null) {
             this.playerPosition.x = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.getPartialTicks();
             this.playerPosition.y = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.getPartialTicks();
