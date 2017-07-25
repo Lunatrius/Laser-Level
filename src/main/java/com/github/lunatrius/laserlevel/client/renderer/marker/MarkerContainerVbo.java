@@ -4,6 +4,7 @@ import com.github.lunatrius.core.client.renderer.GeometryMasks;
 import com.github.lunatrius.core.client.renderer.GeometryTessellator;
 import com.github.lunatrius.laserlevel.marker.Constants;
 import com.github.lunatrius.laserlevel.marker.Marker;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -21,7 +22,7 @@ public class MarkerContainerVbo extends MarkerContainer {
         this.initialized = true;
 
         final GeometryTessellator tessellator = GeometryTessellator.getInstance();
-        final net.minecraft.client.renderer.VertexBuffer buffer = tessellator.getBuffer();
+        final BufferBuilder buffer = tessellator.getBuffer();
         tessellator.setTranslation(0, 0, 0);
         tessellator.setDelta(Constants.Rendering.BLOCK_DELTA);
 

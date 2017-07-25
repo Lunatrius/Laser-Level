@@ -4,8 +4,8 @@ import com.github.lunatrius.core.client.renderer.GeometryTessellator;
 import com.github.lunatrius.core.util.math.MBlockPos;
 import com.github.lunatrius.laserlevel.marker.Constants;
 import com.github.lunatrius.laserlevel.marker.Marker;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.util.EnumFacing;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public abstract class MarkerContainer {
             return;
         }
 
-        final VertexBuffer buffer = tessellator.getBuffer();
+        final BufferBuilder buffer = tessellator.getBuffer();
 
         int hi, lo;
 
@@ -78,7 +78,7 @@ public abstract class MarkerContainer {
         }
     }
 
-    private void drawMarkerLine(final VertexBuffer buffer, final Marker marker, final int x0, final int y0, final int z0, final int x1, final int y1, final int z1) {
+    private void drawMarkerLine(final BufferBuilder buffer, final Marker marker, final int x0, final int y0, final int z0, final int x1, final int y1, final int z1) {
         final double x = marker.pos.x + 0.5;
         final double y = marker.pos.y + 0.5;
         final double z = marker.pos.z + 0.5;

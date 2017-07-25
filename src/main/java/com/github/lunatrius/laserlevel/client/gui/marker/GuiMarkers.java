@@ -87,7 +87,7 @@ public class GuiMarkers extends GuiScreenBase {
     public void drawScreen(final int x, final int y, final float partialTicks) {
         this.guiMarkersSlot.drawScreen(x, y, partialTicks);
 
-        drawCenteredString(this.fontRendererObj, this.strTitle, this.width / 2, 4, 0x00FFFFFF);
+        drawCenteredString(this.fontRenderer, this.strTitle, this.width / 2, 4, 0x00FFFFFF);
 
         super.drawScreen(x, y, partialTicks);
     }

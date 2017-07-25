@@ -12,9 +12,9 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlider;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
@@ -105,16 +105,16 @@ public class GuiMarkerEdit extends GuiScreenBase {
         final int nfHeight = 20;
         int id = -1;
 
-        this.nfMarkerLength = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 4);
+        this.nfMarkerLength = new GuiNumericField(this.mc.fontRenderer, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 4);
         this.buttonList.add(this.nfMarkerLength);
 
-        this.nfX = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 3);
+        this.nfX = new GuiNumericField(this.mc.fontRenderer, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 3);
         this.buttonList.add(this.nfX);
 
-        this.nfY = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 2);
+        this.nfY = new GuiNumericField(this.mc.fontRenderer, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 2);
         this.buttonList.add(this.nfY);
 
-        this.nfZ = new GuiNumericField(this.mc.fontRendererObj, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 1);
+        this.nfZ = new GuiNumericField(this.mc.fontRenderer, ++id, centerX + nfOffsetX, centerY - nfHeight / 2 - (nfHeight + 5) * 1);
         this.buttonList.add(this.nfZ);
 
         final int sliderWidth = 250;
@@ -246,14 +246,14 @@ public class GuiMarkerEdit extends GuiScreenBase {
         final int nfOffsetX = 20;
         final int nfHeight = 20;
 
-        drawCenteredString(this.fontRendererObj, this.strTitle, centerX, 4, 0x00FFFFFF);
-        drawString(this.fontRendererObj, this.strMarkerLength, centerX + nfOffsetX - this.fontRendererObj.getStringWidth(this.strMarkerLength), centerY - (nfHeight + 5) * 3 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
-        drawString(this.fontRendererObj, this.strX, centerX + nfOffsetX - this.fontRendererObj.getStringWidth(this.strX), centerY - (nfHeight + 5) * 2 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
-        drawString(this.fontRendererObj, this.strY, centerX + nfOffsetX - this.fontRendererObj.getStringWidth(this.strY), centerY - (nfHeight + 5) * 1 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
-        drawString(this.fontRendererObj, this.strZ, centerX + nfOffsetX - this.fontRendererObj.getStringWidth(this.strZ), centerY - (nfHeight + 5) * 0 - nfHeight - 5 - this.fontRendererObj.FONT_HEIGHT / 2, 0xFFFFFFFF);
+        drawCenteredString(this.fontRenderer, this.strTitle, centerX, 4, 0x00FFFFFF);
+        drawString(this.fontRenderer, this.strMarkerLength, centerX + nfOffsetX - this.fontRenderer.getStringWidth(this.strMarkerLength), centerY - (nfHeight + 5) * 3 - nfHeight - 5 - this.fontRenderer.FONT_HEIGHT / 2, 0xFFFFFFFF);
+        drawString(this.fontRenderer, this.strX, centerX + nfOffsetX - this.fontRenderer.getStringWidth(this.strX), centerY - (nfHeight + 5) * 2 - nfHeight - 5 - this.fontRenderer.FONT_HEIGHT / 2, 0xFFFFFFFF);
+        drawString(this.fontRenderer, this.strY, centerX + nfOffsetX - this.fontRenderer.getStringWidth(this.strY), centerY - (nfHeight + 5) * 1 - nfHeight - 5 - this.fontRenderer.FONT_HEIGHT / 2, 0xFFFFFFFF);
+        drawString(this.fontRenderer, this.strZ, centerX + nfOffsetX - this.fontRenderer.getStringWidth(this.strZ), centerY - (nfHeight + 5) * 0 - nfHeight - 5 - this.fontRenderer.FONT_HEIGHT / 2, 0xFFFFFFFF);
 
         final Tessellator tessellator = Tessellator.getInstance();
-        final VertexBuffer buffer = tessellator.getBuffer();
+        final BufferBuilder buffer = tessellator.getBuffer();
         final int w = 250;
         final int h = 20;
         final int x = centerX - w / 2;
@@ -280,7 +280,7 @@ public class GuiMarkerEdit extends GuiScreenBase {
 
     private void renderBackground(final int y0, final int y1, final int y2, final int y3) {
         final Tessellator tessellator = Tessellator.getInstance();
-        final VertexBuffer buffer = tessellator.getBuffer();
+        final BufferBuilder buffer = tessellator.getBuffer();
         final double textureWidth = 32.0;
         final double textureHeight = 32.0;
         final int shadowHeight = 4;

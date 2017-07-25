@@ -8,9 +8,9 @@ import com.github.lunatrius.laserlevel.proxy.ClientProxy;
 import com.github.lunatrius.laserlevel.reference.Names;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
@@ -72,7 +72,7 @@ public class GuiMarkersSlot extends GuiSlot {
     }
 
     @Override
-    protected void drawSlot(final int index, final int x, final int y, final int par4, final int mouseX, final int mouseY) {
+    protected void drawSlot(final int index, final int x, final int y, final int par4, final int mouseX, final int mouseY, final float partialTicks) {
         if (index < 0 || index >= ClientProxy.MARKERS.size()) {
             return;
         }
@@ -82,10 +82,10 @@ public class GuiMarkersSlot extends GuiSlot {
         final int color = marker.enabled ? 0x00FFFFFF : 0x00FF7F7F;
         final int spacing = 65;
 
-        this.guiMarkers.drawString(this.mc.fontRendererObj, this.strX + " " + pos.x, x + 2 + spacing * 0, y + 2, color);
-        this.guiMarkers.drawString(this.mc.fontRendererObj, this.strY + " " + pos.y, x + 2 + spacing * 1, y + 2, color);
-        this.guiMarkers.drawString(this.mc.fontRendererObj, this.strZ + " " + pos.z, x + 2 + spacing * 2, y + 2, color);
-        this.guiMarkers.drawString(this.mc.fontRendererObj, this.strDim + " " + marker.dimension, x + 2 + spacing * 3, y + 2, color);
+        this.guiMarkers.drawString(this.mc.fontRenderer, this.strX + " " + pos.x, x + 2 + spacing * 0, y + 2, color);
+        this.guiMarkers.drawString(this.mc.fontRenderer, this.strY + " " + pos.y, x + 2 + spacing * 1, y + 2, color);
+        this.guiMarkers.drawString(this.mc.fontRenderer, this.strZ + " " + pos.z, x + 2 + spacing * 2, y + 2, color);
+        this.guiMarkers.drawString(this.mc.fontRenderer, this.strDim + " " + marker.dimension, x + 2 + spacing * 3, y + 2, color);
 
         final StringBuilder builder = new StringBuilder();
         builder.append(I18n.format(marker.enabled ? Names.Gui.GuiMarkerEdit.ON : Names.Gui.GuiMarkerEdit.OFF));
@@ -101,10 +101,10 @@ public class GuiMarkersSlot extends GuiSlot {
             builder.append(" ").append(sides);
         }
 
-        this.guiMarkers.drawString(this.mc.fontRendererObj, builder.toString(), x + 2, y + 12, color);
+        this.guiMarkers.drawString(this.mc.fontRenderer, builder.toString(), x + 2, y + 12, color);
 
         final Tessellator tessellator = Tessellator.getInstance();
-        final VertexBuffer buffer = tessellator.getBuffer();
+        final BufferBuilder buffer = tessellator.getBuffer();
         final int w = 20;
         final int h = 20;
         final int xx = x + getListWidth() - w - 6;
